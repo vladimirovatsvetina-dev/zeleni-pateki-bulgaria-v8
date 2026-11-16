@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Потребители - Зелени пътеки България</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    {% include "_navigation.html" %}
+    <main class="container">
+        <h1>Управление на потребители</h1>
+        <p><a class="button" href="{{ url_for('staff_user_create') }}">Създай staff потребител</a></p>
+        <table>
+            <thead>
+                <tr><th>Потребител</th><th>E-mail</th><th>Роля</th><th>Статус</th><th>Действие</th></tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user["username"] }}</td>
+                    <td>{{ user["email"] }}</td>
+                    <td>{{ user["role"] }}</td>
+                    <td>{{ user["status"] }}</td>
+                    <td>
+                        {% if user["role"] == "operator" and user["status"] == "PENDING_APPROVAL" %}
+                        <form method="post" action="{{ url_for('approve_operator', user_id=user['id']) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit">Одобри</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

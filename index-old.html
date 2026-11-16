@@ -1,0 +1,170 @@
+<body>
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <title>Зелени пътеки България</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+ <header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top">Зелени пътеки България</a>
+    <nav aria-label="Основна навигация">
+      <a href="#offers">Оферти</a>
+      <a href="#about">За нас</a>
+      <a href="#booking">Заявка</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container hero-content">
+      <p class="eyebrow">Алтернативен туризъм с малки групи</p>
+      <h1>Открий България по зелените пътеки</h1>
+      <p>Планински преходи, веломаршрути и природни преживявания с местни водачи.</p>
+      <a class="button" href="#offers">Разгледай офертите</a>
+    </div>
+  </section>
+
+<section id="offers" class="section container">
+  <h2>Нашите предложения</h2>
+  <p class="lead">Изберете преживяване и изпратете заявка.</p>
+
+  <div class="cards">
+
+    <article class="card">
+      <img src="../images/rodopi.jpg"
+           alt="Планинска гледка от Родопите">
+      <div class="card-body">
+        <h3>Уикенд в Родопите</h3>
+        <p>Два дни с водач, маркирани пътеки и посещение на местно стопанство.</p>
+        <p class="price">220 лв. / човек</p>
+        <a href="#booking">Изпрати заявка</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="images/belogradchik.jpg"
+           alt="Белоградчишките скали">
+      <div class="card-body">
+        <h3>Уикенд в Белоградчик</h3>
+        <p>Два дни с водач, маркирани пътеки и посещение на местно стопанство.</p>
+        <p class="price">250 лв. / човек</p>
+        <a href="#booking">Изпрати заявка</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="images/shabla.jpg"
+           alt="Изглед от Шабла">
+      <div class="card-body">
+        <h3>Уикенд в Шабла</h3>
+        <p>Два дни с водач, маркирани пътеки и посещение на местно стопанство.</p>
+        <p class="price">280 лв. / човек</p>
+        <a href="#booking">Изпрати заявка</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="images/plovdiv.jpg"
+           alt="Старият Пловдив">
+      <div class="card-body">
+        <h3>Уикенд в Пловдив</h3>
+        <p>Два дни културни зебележителности с водач.</p>
+        <p class="price">180 лв. / човек</p>
+        <a href="#booking">Изпрати заявка</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="about" class="section section-soft">
+  <div class="container narrow">
+    <h2>Защо „Зелени пътеки България“?</h2>
+    <p>Работим с малки групи, местни партньори и ясни правила за безопасност.</p>
+  </div>
+</section>
+
+<section id="booking" class="section container narrow">
+  <h2>Изпрати заявка</h2>
+  <p>Попълнете учебна заявка. Не въвеждайте реални лични данни.</p>
+
+  <form id="booking-form">
+
+    <div class="field">
+      <label for="name">Име</label>
+      <input id="name" name="name" type="text" required>
+    </div>
+
+    <div class="field">
+      <label for="email">E-mail</label>
+      <input id="email" name="email" type="email" required>
+    </div>
+
+    <div class="field">
+      <label for="phone">Телефон</label>
+      <input id="phone" name="phone" type="phone" required>
+    </div>
+
+    <div class="field">
+      <label for="tour">Избрана оферта</label>
+
+      <select id="tour" name="tour" required disabled>
+        <option value="">Зареждане на офертите…</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="people">Брой участници</label>
+      <input id="people" name="people" type="number"
+             min="1" max="12" value="2" required>
+    </div>
+
+    <div class="field">
+      <label for="state">Физическа подготовка</label>
+      <select id="state" name="state" required>
+        <option value="">-- Изберете --</option>
+        <option value="good">Добра</option>
+        <option value="very good">Много добра</option>
+        <option value="top">Топ</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="date">Предпочитана дата</label>
+      <input id="date" name="date" type="date" required>
+    </div>
+
+    <div class="field">
+      <label for="notes">Бележка</label>
+      <textarea id="notes" name="notes" rows="4"></textarea>
+    </div>
+
+    <button class="button" type="submit">Провери заявката</button>
+  </form>
+
+  <div id="booking-result" role="status" aria-live="polite" class="result" aria-live="polite"></div>
+
+
+</section>
+
+<section id="saved-requests" class="section container">
+  <h2>Моите учебни заявки</h2>
+  <p>Запазват се само в този браузър на този компютър.</p>
+  <p id="storage-status" role="status"></p>
+  <ul id="request-list"></ul>
+  <button id="clear-requests" type="button">Изтрий всички учебни заявки</button>
+</section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
+

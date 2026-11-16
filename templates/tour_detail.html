@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Направени резервации - Зелени пътеки България</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    {% include "_navigation.html" %}
+    <main>
+        <h1>{{ tour["name"] }}</h1>
+
+        {% if tour["image_url"] %}
+        <img class="tour-image" src="{{ tour['image_url'] }}" alt="{{ tour['name'] }}">
+        {% endif %}
+
+        <p>{{ tour["description"] }}</p>
+        <p><strong>Цена:</strong> {{ tour["price"] }} лв.</p>
+        <p><strong>Капацитет:</strong> {{ tour["capacity"] }}</p>
+
+        <a href="{{ url_for('home') }}">Назад към офертите</a>
+
+
+
+        <section class="map-section">
+            <h2>Местоположение</h2>
+
+            <p>{{ tour["location"] }}</p>
+
+            {% if tour["map_query"] %}
+            <a href="https://www.google.com/maps/search/?api=1&query={{ tour['map_query']|urlencode }}" target="_blank"
+                rel="noopener">
+                Отвори в Google Maps
+            </a>
+            {% endif %}
+        </section>
+
+        <h2>Налични дати</h2>
+
+        {% for departure in departures %}
+        <div class="departure">
+            <strong>
+                {{ departure["departure_date"] }}
+            </strong>
+
+            <span>
+                — свободни места: {{ departure["available"] }}
+            </span>
+        </div>
+        {% else %}
+        <p>Няма публикувани дати.</p>
+        {% endfor %}
+
+
+
+        {% if session.get("role") == "public" %}
+        <form method="post" action="{{ url_for('booking_create') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>Дата
+                <select name="departure_id" required>
+                    <option value="">-- Изберете --</option>
+                    {% for departure in departures %}
+                    {% if departure["available"] > 0 %}
+                    <option value="{{ departure['id'] }}">
+                        {{ departure["departure_date"] }} — свободни места: {{ departure["available"] }}
+                    </option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </label>
+            <label>Участници
+                <input name="participants" type="number" min="1" max="10" value="1" required>
+            </label>
+            <button type="submit">Изпрати резервация</button>
+        </form>
+        {% elif not session.get("user_id") %}
+        <p><a href="{{ url_for('login') }}">Влезте в профила си</a>, за да направите резервация.</p>
+        {% endif %}
+    </main>
+
+
+
+</body>
+
+</html>

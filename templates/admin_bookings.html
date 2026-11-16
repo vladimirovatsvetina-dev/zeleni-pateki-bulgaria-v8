@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Администратор - Резервации</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    {% include "_navigation.html" %}
+
+    <main>
+    <h1>Управление на резервации</h1>
+    <p><a href="{{ url_for('home') }}">Назад към началото</a></p>
+
+    {% if bookings %}
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Тур</th>
+                <th>Локация</th>
+                <th>Дата</th>
+                <th>Име</th>
+                <th>Участници</th>
+                <th>Статус</th>
+                <th>Карта</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking["tour_name"] }}</td>
+                <td>{{ booking["location"] }}</td>
+                <td>{{ booking["departure_date"] }}</td>
+                <td>{{ booking["customer_name"] }}</td>
+                <td>{{ booking["participants"] }}</td>
+                <td>{{ booking["status"] }}</td>
+                <td>
+                    {% if booking["map_query"] %}
+                    <a href="https://www.google.com/maps/search/?api=1&query={{ booking['map_query']|urlencode }}"
+                        target="_blank" rel="noopener">
+                        Карта
+                    </a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if booking["status"] == "PENDING" %}
+
+                    <form method="POST" action="{{ url_for('booking_confirm', booking_id=booking['id']) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit">Потвърди</button>
+                    </form>
+
+                    {% endif %}
+
+                    {% if booking["status"] != "CANCELLED" %}
+
+                    <form method="POST" action="{{ url_for('booking_cancel', booking_id=booking['id']) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit">Отмени</button>
+                    </form>
+
+                    {% else %}
+
+                    Вече е отменена
+
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <p>Няма получени резервации.</p>
+
+    {% endif %}
+
+    </main>
+</body>
+
+</html>

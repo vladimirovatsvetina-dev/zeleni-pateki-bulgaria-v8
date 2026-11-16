@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Нов staff потребител</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    {% include "_navigation.html" %}
+    <main class="section container narrow">
+        <h1>Създай staff потребител</h1>
+        {% if error %}<p class="result error" role="alert">{{ error }}</p>{% endif %}
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>Потребителско име
+                <input name="username" autocomplete="username" required>
+            </label>
+            <label>E-mail
+                <input name="email" type="email" autocomplete="email" required>
+            </label>
+            <label>Парола (поне 8 символа)
+                <input name="password" type="password" minlength="8" autocomplete="new-password" required>
+            </label>
+            <label>Роля
+                <select name="role" required>
+                    <option value="operator">Оператор</option>
+                    <option value="admin">Администратор</option>
+                </select>
+            </label>
+            <button type="submit">Създай</button>
+        </form>
+    </main>
+</body>
+</html>

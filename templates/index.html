@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Зелени пътеки България</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  {% include "_navigation.html" %}
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">Алтернативен туризъм с малки групи</p>
+        <h1>Открий България по зелените пътеки</h1>
+        <p>Планински преходи, веломаршрути и природни преживявания с местни водачи.</p>
+        <a class="button" href="#offers">Разгледай офертите</a>
+      </div>
+    </section>
+
+    <section id="offers" class="section container">
+      <h2>Нашите предложения</h2>
+      <p class="lead">Изберете преживяване и разгледайте подробностите.</p>
+      <div class="cards">
+        {% for tour in tours %}
+        <article class="card">
+          {% if tour["image_url"] %}
+          <img src="{{ tour['image_url'] }}" alt="{{ tour['name'] }}" loading="lazy">
+          {% else %}
+          <div class="card-placeholder" aria-hidden="true"></div>
+          {% endif %}
+          <div class="card-body">
+            <h3>{{ tour["name"] }}</h3>
+            <p>{{ tour["location"] }}</p>
+            <p>{{ tour["description"] }}</p>
+            <p class="price">{{ "%.2f"|format(tour["price"]) }} лв.</p>
+            <a href="{{ url_for('tour_detail', tour_id=tour['id']) }}">Виж подробности</a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
